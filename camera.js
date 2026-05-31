@@ -1,4 +1,4 @@
-var currentPhysicsObject = 1;
+var currentPhysicsObject = 0;
 
 class vector3{
 	constructor(x, y, z){

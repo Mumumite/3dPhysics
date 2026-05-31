@@ -583,7 +583,7 @@ setTimeout(() => {
 	
 	//mass 0 for stationary object
 	//x, y, z, radius, mass, elasticity, acceleration force
-	object1 = new physicsObjectSphere(0, 0, 0, 2, 100, 0, 0.03);
+	object0 = new physicsObjectSphere(0, 0, 0, 2, 100, 0, 0.03);
 
 	for(var i = 0; i < 5; i++){
 		//-50 to 25 for z axis
@@ -661,6 +661,15 @@ setTimeout(() => {
 				new physicsObjectSphere(rng(-25, 40), rng(10, 50), rng(-50, 25), rng(1, 6), rng(1, 10), rng(0,10) / 10, 0.03);
 			};
 			e = false;
+		};
+		
+		if(q == true){
+			physicsObjectSpheres.length = 0;
+			object0 = new physicsObjectSphere(0, 0, 0, 2, 100, 0, 0.03);
+			for(var i = 0; i < 5; i++){
+				new physicsObjectSphere(rng(-25, 40), rng(10, 50), rng(-50, 25), rng(1, 6), rng(1, 10), rng(0,10) / 10, 0.03);
+			};
+			q = false;
 		};
 		
 		if(!w && !s){

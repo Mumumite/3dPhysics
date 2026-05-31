@@ -21,8 +21,6 @@ var inText = true;
 
 var playerBrickIndex = 0;
 
-const socket = io();
-
 const gameWindow = document.getElementById("gameWindow");
 const webgl = gameWindow.getContext("webgl2");
 var program = webgl.createProgram();
