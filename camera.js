@@ -89,7 +89,7 @@ var mouseY = 0;
 var cameraDistancePlayer = 50;
 var cameraAnglePlayer = 0;
 var yaw = 0;
-var pitch = 90;
+var pitch = 45;
 var forward;
 var right;
 var up;
