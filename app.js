@@ -525,7 +525,7 @@ setTimeout(() => {
 	const viewProjectionMatrix = glMatrix.mat4.create();
 	
 	const physicsObjectSpheres = [];
-	const walls = [];
+	const aabbWalls = [];
 	
 	var gravity = -0.03;
 	var jumpPower = 40;
@@ -591,14 +591,14 @@ setTimeout(() => {
 		new physicsObjectSphere(rng(-25, 40), rng(10, 50), rng(-50, 25), rng(1, 6), rng(1, 10), rng(0,10) / 10, 0.03);
 	};
 	
-	class wallObject{
+	class aabbObject{
 		constructor(x1, y1, z1, x2, y2, z2){
 			this.min = new vector3(Math.min(x1, x2), Math.min(y1, y2), Math.min(z1, z2));
 			this.max = new vector3(Math.max(x1, x2), Math.max(y1, y2), Math.max(z1, z2));
-			walls.push(this);
+			aabbWalls.push(this);
 		};
 		
-		drawWall(){
+		drawAABB(){
 			webgl.bindVertexArray(boxVAO);
 
 			var rotation = glMatrix.quat.create();
@@ -618,12 +618,12 @@ setTimeout(() => {
 	};
 	
 	//x1, y1, z1, x2, y2, z2
-	wall0 = new wallObject(36, -5, 26, -36, 5, 24);
-	wall1 = new wallObject(36, -5, -74, -36, 5, -76);
-	wall2 = new wallObject(-36, -5, 24, -38, 5, -74);
-	wall3 = new wallObject(38, -5, 24, 36, 5, -19);
-	wall4 = new wallObject(38, -5, -31, 36, 5, -74);
-	wall4 = new wallObject(-51, -6, -76, 51, -5, 26);
+	wall0 = new aabbObject(36, -5, 26, -36, 5, 24);
+	wall1 = new aabbObject(36, -5, -74, -36, 5, -76);
+	wall2 = new aabbObject(-36, -5, 24, -38, 5, -74);
+	wall3 = new aabbObject(38, -5, 24, 36, 5, -19);
+	wall4 = new aabbObject(38, -5, -31, 36, 5, -74);
+	wall4 = new aabbObject(-51, -6, -76, 51, -5, 26);
 	
 	var friction = 0.05;
 	var input = new vector3(0, 0, 0);
@@ -718,10 +718,10 @@ setTimeout(() => {
 		sphere2.velocity = sphere2.velocity.add(impulseVector.multiply(-sphere2.inverseMass));
 	};
 	
-	function sphereAABBCollisionDetection(sphere, wall){
-		var x = Math.max(wall.min.x, Math.min(sphere.position.x, wall.max.x));
-		var y = Math.max(wall.min.y, Math.min(sphere.position.y, wall.max.y));
-		var z = Math.max(wall.min.z, Math.min(sphere.position.z, wall.max.z));
+	function sphereAABBCollisionDetection(sphere, aabb){
+		var x = Math.max(aabb.min.x, Math.min(sphere.position.x, aabb.max.x));
+		var y = Math.max(aabb.min.y, Math.min(sphere.position.y, aabb.max.y));
+		var z = Math.max(aabb.min.z, Math.min(sphere.position.z, aabb.max.z));
 		
 		var distance = Math.sqrt(
 			(x - sphere.position.x) * (x - sphere.position.x) +  
@@ -733,14 +733,14 @@ setTimeout(() => {
 		return distance < sphere.radius;
 	};
 	
-	function sphereAABBCollisionResolution(sphere, wall) {
-		var closestPoint = new vector3(Math.max(wall.min.x, Math.min(sphere.position.x, wall.max.x)), Math.max(wall.min.y, Math.min(sphere.position.y, wall.max.y)), Math.max(wall.min.z, Math.min(sphere.position.z, wall.max.z)));
+	function sphereAABBCollisionResolution(sphere, aabb) {
+		var closestPoint = new vector3(Math.max(aabb.min.x, Math.min(sphere.position.x, aabb.max.x)), Math.max(aabb.min.y, Math.min(sphere.position.y, aabb.max.y)), Math.max(aabb.min.z, Math.min(sphere.position.z, aabb.max.z)));
 		var penetrationVector = sphere.position.subtract(closestPoint);
 		sphere.position = sphere.position.add(penetrationVector.unit().multiply(sphere.radius - penetrationVector.mag()));
 	}
 	
-	function sphereAABBPhysicsResolution(sphere, wall) {
-		var closestPoint = new vector3(Math.max(wall.min.x, Math.min(sphere.position.x, wall.max.x)), Math.max(wall.min.y, Math.min(sphere.position.y, wall.max.y)), Math.max(wall.min.z, Math.min(sphere.position.z, wall.max.z)));
+	function sphereAABBPhysicsResolution(sphere, aabb) {
+		var closestPoint = new vector3(Math.max(aabb.min.x, Math.min(sphere.position.x, aabb.max.x)), Math.max(aabb.min.y, Math.min(sphere.position.y, aabb.max.y)), Math.max(aabb.min.z, Math.min(sphere.position.z, aabb.max.z)));
 		var normal = sphere.position.subtract(closestPoint).unit();
 		var seperationVelocity = vector3.dotProduct(sphere.velocity, normal);
 		var newSeperationVelocity = -seperationVelocity * sphere.elasticity;
@@ -762,8 +762,16 @@ setTimeout(() => {
 		webgl.uniformMatrix4fv(worldUniform, webgl.FALSE, worldMatrix);
 		webgl.uniformMatrix4fv(viewProjectionUniform, false, viewProjectionMatrix);
 		
-		physicsObjectSpheres.forEach((object, index) => {
+		for(const [index, object] of physicsObjectSpheres.entries()){
 			object.drawPhysicsObjectSphere();
+			
+			for(const aabb of aabbWalls){
+				if(sphereAABBCollisionDetection(physicsObjectSpheres[index], aabb)){
+					//console.log("collision");
+					sphereAABBCollisionResolution(physicsObjectSpheres[index], aabb);
+					sphereAABBPhysicsResolution(physicsObjectSpheres[index], aabb);
+				};
+			};
 			
 			for(var i = index + 1; i < physicsObjectSpheres.length; i++){
 				if(collisionDetectionSphere(physicsObjectSpheres[index], physicsObjectSpheres[i])){
@@ -772,22 +780,14 @@ setTimeout(() => {
 				};
 			};
 			
-			webgl.bindVertexArray(null);
-			
-			walls.forEach((wall) => {
-				if(sphereAABBCollisionDetection(physicsObjectSpheres[index], wall)){
-					//console.log("collision");
-					sphereAABBCollisionResolution(physicsObjectSpheres[index], wall);
-					sphereAABBPhysicsResolution(physicsObjectSpheres[index], wall);
-				};
-			});
-			
 			object.movePhysicsObjectSphere();
-		});
+		};
 		
-		walls.forEach((wall) => {
-			wall.drawWall();
-		}); 
+		
+		
+		for(const aabb of aabbWalls){
+			aabb.drawAABB();
+		}; 
 		
 		requestAnimationFrame(loop);
 	};

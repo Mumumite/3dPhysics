@@ -46,7 +46,7 @@ gameWindow.addEventListener("wheel", scrollValue => {
 	if(cameraDistancePlayer < 8){
 		cameraDistancePlayer = 8;
 	};
-	console.log(cameraDistancePlayer);
+	//console.log(cameraDistancePlayer);
 });
 
 var camDirection = glMatrix.vec3.fromValues(Math.cos(yaw * (Math.PI / 180)) * Math.cos(pitch * (Math.PI / 180)), Math.sin(pitch * (Math.PI / 180)), Math.sin(yaw * (Math.PI / 180)) * Math.cos(pitch * (Math.PI / 180)));
