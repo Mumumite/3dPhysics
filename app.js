@@ -438,6 +438,10 @@ var sphereIndices = [
   109, 108, 12,
 ];
 
+function rng(min, max){
+	return Math.random() * (max - min) + min;
+};
+
 setTimeout(() => {
 
 	if(!webgl){
@@ -448,6 +452,12 @@ setTimeout(() => {
 
 	webgl.clearColor(0.0, 0.0, 0.0, 1.0);
 	webgl.viewport(0, 0, gameWindow.width, gameWindow.height);
+	
+	window.onresize = function(){
+		gameWindow.width = window.innerHeight;
+		gameWindow.height = window.innerHeight;
+		webgl.viewport(0, 0, gameWindow.width, gameWindow.height);
+	};
 
 	webgl.enable(webgl.DEPTH_TEST);
 
@@ -573,12 +583,13 @@ setTimeout(() => {
 	
 	//mass 0 for stationary object
 	//x, y, z, radius, mass, elasticity, acceleration force
-	object0 = new physicsObjectSphere(7, 100, 12, 6, 0.1, 1, 2);
 	object1 = new physicsObjectSphere(0, 0, 0, 2, 100, 0, 0.03);
-	object2 = new physicsObjectSphere(-5, 75, -15, 3, 3, 1, 0.5);
-	object3 = new physicsObjectSphere(20, 50, 20, 5, 5, 1, 0.05);
-	object4 = new physicsObjectSphere(-20, 40, 12, 1.5, 1.5, 1, 0.5);
-	object5 = new physicsObjectSphere(10, 45, -40, 1, 0.5, 1, 0.05);
+
+	for(var i = 0; i < 5; i++){
+		//-50 to 25 for z axis
+		//45 to -25 for x axis
+		new physicsObjectSphere(rng(-25, 40), rng(10, 50), rng(-50, 25), rng(1, 6), rng(1, 10), rng(0,10) / 10, 0.03);
+	};
 	
 	class wallObject{
 		constructor(x1, y1, z1, x2, y2, z2){
@@ -641,6 +652,15 @@ setTimeout(() => {
 		if(ctrl == true){
 			input.y = -1;
 			//eval("object" + currentPhysicsObject).acceleration.y = -eval("object" + currentPhysicsObject).acceleration_force;
+		};
+		
+		if(e == true){
+			for(var i = 0; i < 25; i++){
+				//-50 to 25 for z axis
+				//45 to -25 for x axis
+				new physicsObjectSphere(rng(-25, 40), rng(10, 50), rng(-50, 25), rng(1, 6), rng(1, 10), rng(0,10) / 10, 0.03);
+			};
+			e = false;
 		};
 		
 		if(!w && !s){
