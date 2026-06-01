@@ -438,6 +438,104 @@ var sphereIndices = [
   109, 108, 12,
 ];
 
+var cylinderVertices = [
+  0.0, 1.0, 1.0, 0.8646765373760578, 0.500341945938206, 0.08170966879622166,
+  0.3826834559440613, 0.9238795042037964, -1.0, 0.15366298152145508, 0.38443086760054257, 0.12293350127910674,
+  0.0, 1.0, -1.0, 0.41071886659010304, 0.7866608836289234, 0.44608701631571435,
+  0.3826834559440613, 0.9238795042037964, 1.0, 0.5087280235063002, 0.3681668712025865, 0.2925629628104651,
+  0.7071067690849304, 0.7071067690849304, -1.0, 0.7009119164174444, 0.5443023585654246, 0.24536721521588356,
+  0.7071067690849304, 0.7071067690849304, 1.0, 0.3871319040901202, 0.18155100201873364, 0.8003136352860779,
+  0.9238795042037964, 0.3826834559440613, -1.0, 0.564727574970081, 0.17250190681406563, 0.9020192685942516,
+  0.9238795042037964, 0.3826834559440613, 1.0, 0.17863122264805154, 0.6111637424229903, 0.17815862898920842,
+  1.0, 0.0, -1.0, 0.014168600986436686, 0.5658840405328097, 0.3515155698022191,
+  1.0, 0.0, 1.0, 0.579501917154141, 0.9452470863097975, 0.8814251900758263,
+  0.9238795042037964, -0.3826834559440613, -1.0, 0.425073542035747, 0.9425526201560586, 0.6687046412874151,
+  0.9238795042037964, -0.3826834559440613, 1.0, 0.1913036418051529, 0.34827099063197575, 0.5401261031638637,
+  0.7071067690849304, -0.7071067690849304, -1.0, 0.41730593648990133, 0.05438388280120798, 0.6143002900393139,
+  0.7071067690849304, -0.7071067690849304, 1.0, 0.7762316220405354, 0.36050115916271275, 0.885509621301675,
+  0.3826834559440613, -0.9238795042037964, -1.0, 0.7967651614276876, 0.7993125027776583, 0.547340897338971,
+  0.3826834559440613, -0.9238795042037964, 1.0, 0.5926332457431773, 0.538144649413649, 0.9093038377928471,
+  0.0, -1.0, -1.0, 0.4120131041692924, 0.0962869207378153, 0.5830686668376317,
+  0.0, -1.0, 1.0, 0.24089481967441917, 0.7099532331755811, 0.10593237789289911,
+  -0.3826834559440613, -0.9238795042037964, -1.0, 0.4877608003470433, 0.7321779605528098, 0.7799696900429531,
+  -0.3826834559440613, -0.9238795042037964, 1.0, 0.19293724501478748, 0.07698634526283354, 0.50701663142957,
+  -0.7071067690849304, -0.7071067690849304, -1.0, 0.7429995994797808, 0.3487161544366594, 0.8813179391704751,
+  -0.7071067690849304, -0.7071067690849304, 1.0, 0.49447749662352825, 0.3797068090772481, 0.9092203270677887,
+  -0.9238795042037964, -0.3826834559440613, -1.0, 0.8919059345498531, 0.6827187092393754, 0.4120069787312354,
+  -0.9238795042037964, -0.3826834559440613, 1.0, 0.06822263237853521, 0.49401633291335945, 0.1664527552968078,
+  -1.0, 0.0, -1.0, 0.5699874027171546, 0.5185122340157095, 0.9049329420731237,
+  -1.0, 0.0, 1.0, 0.9063180745733573, 0.25811399179866135, 0.7983940029068278,
+  -0.9238795042037964, 0.3826834559440613, -1.0, 0.3412168861345197, 0.33545410448135826, 0.8072254621707795,
+  -0.9238795042037964, 0.3826834559440613, 1.0, 0.3237102204376453, 0.1622874024890838, 0.2745749320966012,
+  -0.7071067690849304, 0.7071067690849304, -1.0, 0.864646571905081, 0.8324915494862102, 0.17735751190279625,
+  -0.7071067690849304, 0.7071067690849304, 1.0, 0.9900652270486464, 0.3429549996320236, 0.445294809591258,
+  -0.3826834559440613, 0.9238795042037964, -1.0, 0.6684654209960497, 0.5179270293804357, 0.2231193079390148,
+  -0.3826834559440613, 0.9238795042037964, 1.0, 0.2744704947834423, 0.5924540389686132, 0.24808506294446897,
+];
+
+var cylinderIndices = [
+  0, 1, 2,
+  3, 4, 1,
+  5, 6, 4,
+  7, 8, 6,
+  9, 10, 8,
+  11, 12, 10,
+  13, 14, 12,
+  15, 16, 14,
+  17, 18, 16,
+  19, 20, 18,
+  21, 22, 20,
+  23, 24, 22,
+  25, 26, 24,
+  27, 28, 26,
+  21, 13, 5,
+  29, 30, 28,
+  31, 2, 30,
+  14, 22, 30,
+  0, 3, 1,
+  3, 5, 4,
+  5, 7, 6,
+  7, 9, 8,
+  9, 11, 10,
+  11, 13, 12,
+  13, 15, 14,
+  15, 17, 16,
+  17, 19, 18,
+  19, 21, 20,
+  21, 23, 22,
+  23, 25, 24,
+  25, 27, 26,
+  27, 29, 28,
+  5, 3, 0,
+  0, 31, 5,
+  31, 29, 5,
+  29, 27, 21,
+  27, 25, 21,
+  25, 23, 21,
+  21, 19, 13,
+  19, 17, 13,
+  17, 15, 13,
+  13, 11, 9,
+  9, 7, 13,
+  7, 5, 13,
+  5, 29, 21,
+  29, 31, 30,
+  31, 0, 2,
+  30, 2, 1,
+  1, 4, 30,
+  4, 6, 30,
+  6, 8, 10,
+  10, 12, 6,
+  12, 14, 6,
+  14, 16, 18,
+  18, 20, 14,
+  20, 22, 14,
+  22, 24, 26,
+  26, 28, 22,
+  28, 30, 22,
+  30, 6, 14,
+];
+
 function rng(min, max){
 	return Math.random() * (max - min) + min;
 };
@@ -495,6 +593,8 @@ setTimeout(() => {
 	webgl.enableVertexAttribArray(positionAttribLocation);
 	webgl.enableVertexAttribArray(colorAttribLocation);
 	
+	
+	
 	var sphereVAO = webgl.createVertexArray();
 	webgl.bindVertexArray(sphereVAO);
 	
@@ -505,6 +605,25 @@ setTimeout(() => {
 	var sphereIBO = webgl.createBuffer();
 	webgl.bindBuffer(webgl.ELEMENT_ARRAY_BUFFER, sphereIBO);
 	webgl.bufferData(webgl.ELEMENT_ARRAY_BUFFER, new Uint16Array(sphereIndices), webgl.STATIC_DRAW);
+
+	webgl.vertexAttribPointer(positionAttribLocation, 3, webgl.FLOAT, webgl.FALSE, 6 * Float32Array.BYTES_PER_ELEMENT, 0);
+	webgl.vertexAttribPointer(colorAttribLocation, 3, webgl.FLOAT, webgl.FALSE, 6 * Float32Array.BYTES_PER_ELEMENT, 3 * Float32Array.BYTES_PER_ELEMENT);
+
+	webgl.enableVertexAttribArray(positionAttribLocation);
+	webgl.enableVertexAttribArray(colorAttribLocation);
+	
+	
+	
+	var cylinderVAO = webgl.createVertexArray();
+	webgl.bindVertexArray(cylinderVAO);
+	
+	var cylinderVBO = webgl.createBuffer();
+	webgl.bindBuffer(webgl.ARRAY_BUFFER, cylinderVBO);
+	webgl.bufferData(webgl.ARRAY_BUFFER, new Float32Array(cylinderVertices), webgl.STATIC_DRAW);
+
+	var cylinderIBO = webgl.createBuffer();
+	webgl.bindBuffer(webgl.ELEMENT_ARRAY_BUFFER, cylinderIBO);
+	webgl.bufferData(webgl.ELEMENT_ARRAY_BUFFER, new Uint16Array(cylinderIndices), webgl.STATIC_DRAW);
 
 	webgl.vertexAttribPointer(positionAttribLocation, 3, webgl.FLOAT, webgl.FALSE, 6 * Float32Array.BYTES_PER_ELEMENT, 0);
 	webgl.vertexAttribPointer(colorAttribLocation, 3, webgl.FLOAT, webgl.FALSE, 6 * Float32Array.BYTES_PER_ELEMENT, 3 * Float32Array.BYTES_PER_ELEMENT);
@@ -525,6 +644,7 @@ setTimeout(() => {
 	const viewProjectionMatrix = glMatrix.mat4.create();
 	
 	const physicsObjectSpheres = [];
+	const oobbWalls = [];
 	const aabbWalls = [];
 	
 	var gravity = -0.03;
@@ -551,17 +671,18 @@ setTimeout(() => {
 			webgl.bindVertexArray(sphereVAO);
 
 			var rotation = glMatrix.quat.create();
-
-			glMatrix.quat.setAxisAngle(rotation, [0, 1, 0], (0 * Math.PI / 180));
-
+			
+			glMatrix.quat.rotateY(rotation, rotation, (0 * (Math.PI / 180)));
+			glMatrix.quat.rotateX(rotation, rotation, (0 * (Math.PI / 180)));
+			glMatrix.quat.rotateZ(rotation, rotation, (0 * (Math.PI / 180)));
+			
 			var playerPosVector = glMatrix.vec3.fromValues(this.position.x, this.position.y, this.position.z);
-
 			var playerScaleVector = glMatrix.vec3.fromValues(this.radius, this.radius, this.radius);
-
+			
 			glMatrix.mat4.fromRotationTranslationScale(worldMatrix, rotation, playerPosVector, playerScaleVector);
-
+			
 			webgl.uniformMatrix4fv(worldUniform, webgl.FALSE, worldMatrix);
-
+			
 			webgl.drawElements(webgl.TRIANGLES, sphereIndices.length, webgl.UNSIGNED_SHORT, 0);
 		};
 			
@@ -584,6 +705,11 @@ setTimeout(() => {
 	//mass 0 for stationary object
 	//x, y, z, radius, mass, elasticity, acceleration force
 	object0 = new physicsObjectSphere(0, 0, 0, 2, 100, 0, 0.03);
+	
+	
+	//SET WHAT CAMERA FOLLOWS AND INPUT EFFECTS BY CHANGING ACTIVE OBJECT
+	var activeObject = object0;
+	
 
 	for(var i = 0; i < 5; i++){
 		//-50 to 25 for z axis
@@ -595,25 +721,36 @@ setTimeout(() => {
 		constructor(x1, y1, z1, x2, y2, z2){
 			this.min = new vector3(Math.min(x1, x2), Math.min(y1, y2), Math.min(z1, z2));
 			this.max = new vector3(Math.max(x1, x2), Math.max(y1, y2), Math.max(z1, z2));
+			this.center = new vector3((this.min.x + this.max.x) / 2, (this.min.y + this.max.y) / 2, (this.min.z + this.max.z) / 2);
+			this.rotation = 0;
+			this.rotationVelocity = 0;
 			aabbWalls.push(this);
 		};
 		
 		drawAABB(){
 			webgl.bindVertexArray(boxVAO);
-
+			
 			var rotation = glMatrix.quat.create();
-
-			glMatrix.quat.setAxisAngle(rotation, [0, 1, 0], (0 * Math.PI / 180));
-
-			var playerPosVector = glMatrix.vec3.fromValues((this.min.x + this.max.x) / 2, (this.min.y + this.max.y) / 2, (this.min.z + this.max.z) / 2);
-
+			
+			glMatrix.quat.rotateY(rotation, rotation, (this.rotation * (Math.PI / 180)));
+			glMatrix.quat.rotateX(rotation, rotation, (0 * (Math.PI / 180)));
+			glMatrix.quat.rotateZ(rotation, rotation, (0 * (Math.PI / 180)));
+			
+			var playerPosVector = glMatrix.vec3.fromValues(this.center.x, this.center.y, this.center.z);
 			var playerScaleVector = glMatrix.vec3.fromValues(Math.abs(this.min.x - this.max.x) / 2, Math.abs(this.min.y - this.max.y) / 2, Math.abs(this.min.z - this.max.z) / 2);
-
+			
 			glMatrix.mat4.fromRotationTranslationScale(worldMatrix, rotation, playerPosVector, playerScaleVector);
-
+			
 			webgl.uniformMatrix4fv(worldUniform, webgl.FALSE, worldMatrix);
-
+			
 			webgl.drawElements(webgl.TRIANGLES, boxIndices.length, webgl.UNSIGNED_SHORT, 0);
+			
+			webgl.bindVertexArray(null);
+		};
+		
+		moveAABBWall(){
+			this.rotation += this.rotationVelocity;
+			this.rotationVelocity *= 0.99;
 		};
 	};
 	
@@ -624,6 +761,46 @@ setTimeout(() => {
 	wall3 = new aabbObject(38, -5, 24, 36, 5, -19);
 	wall4 = new aabbObject(38, -5, -31, 36, 5, -74);
 	wall4 = new aabbObject(-51, -6, -76, 51, -5, 26);
+	wall5 = new aabbObject(-0.5, -5, -25.5, 0.5, -3, -24.5);
+	
+	class oobbObject{
+		constructor(x1, y1, z1, x2, y2, z2){
+			this.min = new vector3(Math.min(x1, x2), Math.min(y1, y2), Math.min(z1, z2));
+			this.max = new vector3(Math.max(x1, x2), Math.max(y1, y2), Math.max(z1, z2));
+			this.center = new vector3((this.min.x + this.max.x) / 2, (this.min.y + this.max.y) / 2, (this.min.z + this.max.z) / 2);
+			this.rotation = 0;
+			this.rotationVelocity = 0;
+			oobbWalls.push(this);
+		};
+		
+		drawOOBB(){
+			webgl.bindVertexArray(boxVAO);
+			
+			var rotation = glMatrix.quat.create();
+			
+			glMatrix.quat.rotateY(rotation, rotation, (this.rotation * (Math.PI / 180)));
+			glMatrix.quat.rotateX(rotation, rotation, (0 * (Math.PI / 180)));
+			glMatrix.quat.rotateZ(rotation, rotation, (0 * (Math.PI / 180)));
+			
+			var playerPosVector = glMatrix.vec3.fromValues(this.center.x, this.center.y, this.center.z);
+			var playerScaleVector = glMatrix.vec3.fromValues(Math.abs(this.min.x - this.max.x) / 2, Math.abs(this.min.y - this.max.y) / 2, Math.abs(this.min.z - this.max.z) / 2);
+			
+			glMatrix.mat4.fromRotationTranslationScale(worldMatrix, rotation, playerPosVector, playerScaleVector);
+			
+			webgl.uniformMatrix4fv(worldUniform, webgl.FALSE, worldMatrix);
+			
+			webgl.drawElements(webgl.TRIANGLES, boxIndices.length, webgl.UNSIGNED_SHORT, 0);
+			
+			webgl.bindVertexArray(null);
+		};
+		
+		moveOOBBWall(){
+			this.rotation += this.rotationVelocity;
+			this.rotationVelocity *= 0.99;
+		};
+	};
+	
+	spinner0 = new oobbObject(-0.5, -3, -40.5, 0.5, -1, -9.5);
 	
 	var friction = 0.05;
 	var input = new vector3(0, 0, 0);
@@ -666,6 +843,7 @@ setTimeout(() => {
 		if(q == true){
 			physicsObjectSpheres.length = 0;
 			object0 = new physicsObjectSphere(0, 0, 0, 2, 100, 0, 0.03);
+			activeObject = object0;
 			for(var i = 0; i < 5; i++){
 				new physicsObjectSphere(rng(-25, 40), rng(10, 50), rng(-50, 25), rng(1, 6), rng(1, 10), rng(0,10) / 10, 0.03);
 			};
@@ -685,7 +863,7 @@ setTimeout(() => {
 			//eval("object" + currentPhysicsObject).acceleration.y = 0;
 		};
 		
-		eval("object" + currentPhysicsObject).acceleration = forward.multiply(input.x * eval("object" + currentPhysicsObject).acceleration_force).add(right.multiply(input.z * eval("object" + currentPhysicsObject).acceleration_force));
+		activeObject.acceleration = forward.multiply(input.x * activeObject.acceleration_force).add(right.multiply(input.z * activeObject.acceleration_force));
 	};
 	
 	function collisionDetectionSphere(sphere1, sphere2){
@@ -750,10 +928,17 @@ setTimeout(() => {
 	
 	var loop = function(){
 
-		mouseInput(eval("object" + currentPhysicsObject).position);
+		mouseInput(activeObject.position);
 		movePhysicsObject();
+		
+		if(r == true){
+			spinner0.rotationVelocity = 5;
+		};
+		if(t == true){
+			spinner0.rotationVelocity = -5;
+		};
 	
-		glMatrix.mat4.lookAt(viewMatrix, camPos, glMatrix.vec3.fromValues(eval("object" + currentPhysicsObject).position.x, eval("object" + currentPhysicsObject).position.y, eval("object" + currentPhysicsObject).position.z), camUp);
+		glMatrix.mat4.lookAt(viewMatrix, camPos, glMatrix.vec3.fromValues(activeObject.position.x, activeObject.position.y, activeObject.position.z), camUp);
 		glMatrix.mat4.perspective(projectionMatrix, 90 * (Math.PI / 180), gameWindow.width / gameWindow.height, 0.01, 1000);
 		glMatrix.mat4.multiply(viewProjectionMatrix, projectionMatrix, viewMatrix);
 
@@ -783,10 +968,14 @@ setTimeout(() => {
 			object.movePhysicsObjectSphere();
 		};
 		
-		
-		
 		for(const aabb of aabbWalls){
 			aabb.drawAABB();
+			aabb.moveAABBWall();
+		}; 
+		
+		for(const oobb of oobbWalls){
+			oobb.drawOOBB();
+			oobb.moveOOBBWall();
 		}; 
 		
 		requestAnimationFrame(loop);

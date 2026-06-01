@@ -31,8 +31,7 @@ window.addEventListener("beforeUnload", function(unload){
 
 window.addEventListener("keydown", function(key){
 	if(key.code == "KeyR"){
-		socket.emit("resetSelf");
-		
+		r = true;
 	};
 	if(key.code == "KeyW"){
 		w = true;
@@ -65,7 +64,6 @@ window.addEventListener("keydown", function(key){
 	};
 	if(key.code == "KeyT"){
 		t = true;
-		
 	};
 	if(key.code == "KeyP"){
 		p = true;
@@ -102,6 +100,9 @@ window.addEventListener("keyup", function(key){
 	if(inText == false){
 		key.preventDefault();
 	};
+	if(key.code == "KeyR"){
+		r = false;
+	};
 	if(key.code == "KeyW"){
 		w = false;
 	};
@@ -137,5 +138,8 @@ window.addEventListener("keyup", function(key){
 	};
 	if(key.code == "KeyL"){
 		l = false;
+	};
+	if(key.code == "KeyT"){
+		t = false;
 	};
 });
