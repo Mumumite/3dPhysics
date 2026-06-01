@@ -764,28 +764,30 @@ setTimeout(() => {
 	wall5 = new aabbObject(-0.5, -5, -25.5, 0.5, -3, -24.5);
 	
 	class oobbObject{
-		constructor(x1, y1, z1, x2, y2, z2){
-			this.min = new vector3(Math.min(x1, x2), Math.min(y1, y2), Math.min(z1, z2));
-			this.max = new vector3(Math.max(x1, x2), Math.max(y1, y2), Math.max(z1, z2));
-			this.center = new vector3((this.min.x + this.max.x) / 2, (this.min.y + this.max.y) / 2, (this.min.z + this.max.z) / 2);
-			this.rotation = 0;
+		constructor(center, scale, rotation){
+			this.center = center;
+			this.scale = scale;
+			this.halfScale = new vector3(scale.x / 2, scale.y / 2, scale.z / 2);
+			
 			this.rotationVelocity = 0;
+			this.rotation = rotation;
+			this.rotationQuaternion = glMatrix.quat.create();
+			glMatrix.quat.rotateY(this.rotationQuaternion, this.rotationQuaternion, (this.rotation.x * (Math.PI / 180)));
+			glMatrix.quat.rotateX(this.rotationQuaternion, this.rotationQuaternion, (this.rotation.y * (Math.PI / 180)));
+			glMatrix.quat.rotateZ(this.rotationQuaternion, this.rotationQuaternion, (this.rotation.z * (Math.PI / 180)));
+			
+			this.spinner = false;
+			
 			oobbWalls.push(this);
 		};
 		
 		drawOOBB(){
 			webgl.bindVertexArray(boxVAO);
 			
-			var rotation = glMatrix.quat.create();
-			
-			glMatrix.quat.rotateY(rotation, rotation, (this.rotation * (Math.PI / 180)));
-			glMatrix.quat.rotateX(rotation, rotation, (0 * (Math.PI / 180)));
-			glMatrix.quat.rotateZ(rotation, rotation, (0 * (Math.PI / 180)));
-			
 			var playerPosVector = glMatrix.vec3.fromValues(this.center.x, this.center.y, this.center.z);
-			var playerScaleVector = glMatrix.vec3.fromValues(Math.abs(this.min.x - this.max.x) / 2, Math.abs(this.min.y - this.max.y) / 2, Math.abs(this.min.z - this.max.z) / 2);
+			var playerScaleVector = glMatrix.vec3.fromValues(this.scale.x, this.scale.y, this.scale.z);
 			
-			glMatrix.mat4.fromRotationTranslationScale(worldMatrix, rotation, playerPosVector, playerScaleVector);
+			glMatrix.mat4.fromRotationTranslationScale(worldMatrix, this.rotationQuaternion, playerPosVector, playerScaleVector);
 			
 			webgl.uniformMatrix4fv(worldUniform, webgl.FALSE, worldMatrix);
 			
@@ -795,12 +797,22 @@ setTimeout(() => {
 		};
 		
 		moveOOBBWall(){
-			this.rotation += this.rotationVelocity;
+			this.rotation.x += this.rotationVelocity;
 			this.rotationVelocity *= 0.99;
+			if(this.spinner == true){
+				this.rotationQuaternion = glMatrix.quat.create();
+				glMatrix.quat.rotateY(this.rotationQuaternion, this.rotationQuaternion, (this.rotation.x * (Math.PI / 180)));
+			};
 		};
 	};
+	//x, y, z, sx, sy, sz, rx, ry, rz
+	spinner0 = new oobbObject(new vector3(0, -2, -25), new vector3(0.5, 1, 20), new vector3(45, 0, 0));
+	spinner0.spinner = true;
 	
-	spinner0 = new oobbObject(-0.5, -3, -40.5, 0.5, -1, -9.5);
+	ramp0 = new oobbObject(new vector3(25, -2, -62), new vector3(10, 1, 20), new vector3(0, 25, 0));
+	ramp1 = new oobbObject(new vector3(-25, -2, -62), new vector3(10, 1, 20), new vector3(0, 15, 0));
+	
+	slant0 = new oobbObject(new vector3(-36, 0, 24), new vector3(10, 10, 10), new vector3(-45, 0, 0));
 	
 	var friction = 0.05;
 	var input = new vector3(0, 0, 0);
@@ -915,7 +927,7 @@ setTimeout(() => {
 		var closestPoint = new vector3(Math.max(aabb.min.x, Math.min(sphere.position.x, aabb.max.x)), Math.max(aabb.min.y, Math.min(sphere.position.y, aabb.max.y)), Math.max(aabb.min.z, Math.min(sphere.position.z, aabb.max.z)));
 		var penetrationVector = sphere.position.subtract(closestPoint);
 		sphere.position = sphere.position.add(penetrationVector.unit().multiply(sphere.radius - penetrationVector.mag()));
-	}
+	};
 	
 	function sphereAABBPhysicsResolution(sphere, aabb) {
 		var closestPoint = new vector3(Math.max(aabb.min.x, Math.min(sphere.position.x, aabb.max.x)), Math.max(aabb.min.y, Math.min(sphere.position.y, aabb.max.y)), Math.max(aabb.min.z, Math.min(sphere.position.z, aabb.max.z)));
@@ -924,7 +936,42 @@ setTimeout(() => {
 		var newSeperationVelocity = -seperationVelocity * sphere.elasticity;
 		var velocitySeperationDifference = seperationVelocity - newSeperationVelocity;
 		sphere.velocity = sphere.velocity.add(normal.multiply(-velocitySeperationDifference));
-	}
+	};
+	
+	function sphereOOBBCollisionDetection(sphere, oobb) {
+		var oobbMatrix = glMatrix.mat4.create();
+		glMatrix.mat4.fromRotationTranslation(oobbMatrix, oobb.rotationQuaternion, glMatrix.vec3.fromValues(oobb.center.x, oobb.center.y, oobb.center.z));
+
+		var inverseOOBBMatrix = glMatrix.mat4.create();
+		glMatrix.mat4.invert(inverseOOBBMatrix, oobbMatrix);
+		
+		var localSpherePosition = glMatrix.vec3.create();
+		glMatrix.vec3.transformMat4(localSpherePosition, glMatrix.vec3.fromValues(sphere.position.x, sphere.position.y, sphere.position.z), inverseOOBBMatrix);
+		
+		var x = Math.max(-oobb.scale.x, Math.min(localSpherePosition[0], oobb.scale.x));
+		var y = Math.max(-oobb.scale.y, Math.min(localSpherePosition[1], oobb.scale.y));
+		var z = Math.max(-oobb.scale.z, Math.min(localSpherePosition[2], oobb.scale.z));
+		
+		var distance = Math.sqrt(
+			(x - localSpherePosition[0]) * (x - localSpherePosition[0]) +  
+			(y - localSpherePosition[1]) * (y - localSpherePosition[1]) +  
+			(z - localSpherePosition[2]) * (z - localSpherePosition[2])  
+		);
+		
+		if(distance < sphere.radius){
+			sphereOOBBCollisionResolution(sphere, oobb, new vector3(Math.max(-oobb.scale.x, Math.min(localSpherePosition[0], oobb.scale.x)), Math.max(-oobb.scale.y, Math.min(localSpherePosition[1], oobb.scale.y)), Math.max(-oobb.scale.z, Math.min(localSpherePosition[2], oobb.scale.z))), oobbMatrix);
+		};
+	};
+	
+	function sphereOOBBCollisionResolution(sphere, oobb, closestPoint, oobbMatrix) {
+		var closestPointWorldSpace = glMatrix.vec3.create();
+		glMatrix.vec3.transformMat4(closestPointWorldSpace, glMatrix.vec3.fromValues(closestPoint.x, closestPoint.y, closestPoint.z), oobbMatrix);
+		
+		var closestPointVec3 = new vector3(closestPointWorldSpace[0], closestPointWorldSpace[1], closestPointWorldSpace[2]);
+		
+		var penetrationVector = sphere.position.subtract(closestPointVec3);
+		sphere.position = sphere.position.add(penetrationVector.unit().multiply(sphere.radius - penetrationVector.mag()));
+	};
 	
 	var loop = function(){
 
@@ -957,6 +1004,12 @@ setTimeout(() => {
 					sphereAABBPhysicsResolution(physicsObjectSpheres[index], aabb);
 				};
 			};
+			
+			for(const oobb of oobbWalls){
+				if(sphereOOBBCollisionDetection(physicsObjectSpheres[index], oobb)){
+					console.log("collision");
+				};
+			}; 
 			
 			for(var i = index + 1; i < physicsObjectSpheres.length; i++){
 				if(collisionDetectionSphere(physicsObjectSpheres[index], physicsObjectSpheres[i])){
