@@ -821,6 +821,7 @@ setTimeout(() => {
 	
 	ramp0 = new oobbObject(new vector3(25, -2, -62), new vector3(10, 1, 20), new vector3(0, 25, 0));
 	ramp1 = new oobbObject(new vector3(-25, -2, -62), new vector3(10, 1, 20), new vector3(0, 15, 0));
+	ramp2 = new oobbObject(new vector3(0, -2, -62), new vector3(10, 1, 20), new vector3(0, 65, 0));
 	
 	slant0 = new oobbObject(new vector3(-36, 0, 24), new vector3(10, 10, 10), new vector3(-45, 0, 0));
 	
