@@ -862,7 +862,7 @@ setTimeout(() => {
 			for(var i = 0; i < 1; i++){
 				//-50 to 25 for z axis
 				//45 to -25 for x axis
-				new physicsObjectSphere(rng(-15, 15), rng(115, 120), rng(-40, -30), rng(1, 6), rng(1, 3), rng(0,10) / 10, 0.03);
+				new physicsObjectSphere(rng(-15, 15), rng(120, 140), rng(-40, -30), rng(1, 6), rng(1, 3), rng(0,10) / 10, 0.03);
 			};
 			e = false;
 		};
