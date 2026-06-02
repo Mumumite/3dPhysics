@@ -647,7 +647,7 @@ setTimeout(() => {
 	const oobbWalls = [];
 	const aabbWalls = [];
 	
-	var gravity = -0.03;
+	var gravity = -0.098;
 	var jumpPower = 0.1;
 	
 	class physicsObjectSphere{
@@ -724,7 +724,7 @@ setTimeout(() => {
 	for(var i = 0; i < 5; i++){
 		//-50 to 25 for z axis
 		//45 to -25 for x axis
-		new physicsObjectSphere(rng(-25, 40), rng(10, 50), rng(-50, 25), rng(1, 6), rng(1, 10), rng(0,10) / 10, 0.03);
+		new physicsObjectSphere(rng(-25, 40), rng(10, 50), rng(-50, 25), rng(1, 6), 1, rng(0,10) / 10, 0.03);
 	};
 	
 	class aabbObject{
@@ -823,6 +823,10 @@ setTimeout(() => {
 	ramp1 = new oobbObject(new vector3(-25, -2, -62), new vector3(10, 1, 20), new vector3(0, 15, 0));
 	ramp2 = new oobbObject(new vector3(0, -2, -62), new vector3(10, 1, 20), new vector3(0, 65, 0));
 	
+	ramp3 = new oobbObject(new vector3(0, 60, -52), new vector3(20, 1, 30), new vector3(0, 40, 0));
+	ramp4 = new oobbObject(new vector3(0, 90, -22), new vector3(20, 1, 25), new vector3(0, -45, 0));
+	ramp5 = new oobbObject(new vector3(0, 120, -42), new vector3(20, 1, 20), new vector3(0, 40, 0));
+	
 	slant0 = new oobbObject(new vector3(-36, 0, 24), new vector3(10, 10, 10), new vector3(-45, 0, 0));
 	
 	var friction = 0.05;
@@ -855,10 +859,10 @@ setTimeout(() => {
 		};
 		
 		if(e == true){
-			for(var i = 0; i < 25; i++){
+			for(var i = 0; i < 1; i++){
 				//-50 to 25 for z axis
 				//45 to -25 for x axis
-				new physicsObjectSphere(rng(-25, 40), rng(10, 50), rng(-50, 25), rng(1, 6), rng(1, 10), rng(0,10) / 10, 0.03);
+				new physicsObjectSphere(rng(-15, 15), rng(115, 120), rng(-40, -30), rng(1, 6), rng(1, 3), rng(0,10) / 10, 0.03);
 			};
 			e = false;
 		};
