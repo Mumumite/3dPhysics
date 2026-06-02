@@ -648,7 +648,7 @@ setTimeout(() => {
 	const aabbWalls = [];
 	
 	var gravity = -0.03;
-	var jumpPower = 40;
+	var jumpPower = 0.1;
 	
 	class physicsObjectSphere{
 		constructor(x, y, z, radius, mass, elasticity, acceleration_force){
@@ -664,6 +664,7 @@ setTimeout(() => {
 				this.inverseMass = 1 / this.mass;
 			};
 			this.elasticity = elasticity;
+			this.mainSphere = false;
 			physicsObjectSpheres.push(this);
 		};
 		
@@ -692,7 +693,15 @@ setTimeout(() => {
 			
 			this.acceleration = this.acceleration.unit().multiply(this.acceleration_force);
 			
-			this.acceleration.y = gravity;
+			if(this.mainSphere == true){
+				if(space == true){
+					this.acceleration.y = jumpPower;
+				}else{
+					this.acceleration.y = gravity;
+				};
+			}else{
+				this.acceleration.y = gravity;
+			};
 			
 			this.velocity = this.velocity.add(this.acceleration);
 			
@@ -705,6 +714,7 @@ setTimeout(() => {
 	//mass 0 for stationary object
 	//x, y, z, radius, mass, elasticity, acceleration force
 	object0 = new physicsObjectSphere(0, 0, 0, 2, 100, 0, 0.03);
+	object0.mainSphere = true;
 	
 	
 	//SET WHAT CAMERA FOLLOWS AND INPUT EFFECTS BY CHANGING ACTIVE OBJECT
@@ -856,6 +866,7 @@ setTimeout(() => {
 			physicsObjectSpheres.length = 0;
 			object0 = new physicsObjectSphere(0, 0, 0, 2, 100, 0, 0.03);
 			activeObject = object0;
+			object0.mainSphere = true;
 			for(var i = 0; i < 5; i++){
 				new physicsObjectSphere(rng(-25, 40), rng(10, 50), rng(-50, 25), rng(1, 6), rng(1, 10), rng(0,10) / 10, 0.03);
 			};
